@@ -24,7 +24,7 @@ public class SaveTwoArticles extends CoreTestCase {
 
         SearchPageObject.typeSearchRequest(first_search_request);
 
-        String topic_of_first_requested_article = "Object-oriented programming language";
+        String topic_of_first_requested_article = "bject-oriented programming language";
 
         SearchPageObject.clickByArticleWithSubstringToOpenIt(topic_of_first_requested_article, first_search_request);
 
@@ -53,7 +53,7 @@ public class SaveTwoArticles extends CoreTestCase {
 
         SearchPageObject.typeSearchRequest(second_search_request);
 
-        String topic_of_second_requested_article = "General-purpose programming language";
+        String topic_of_second_requested_article = "eneral-purpose programming language";
 
         String kotlin_article_name = "Kotlin (programming language)";
 
