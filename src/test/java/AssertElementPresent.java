@@ -1,7 +1,6 @@
 import lib.CoreTestCase;
 import lib.ui.*;
-import lib.ui.factories.ArticlePageObjectFactory;
-import lib.ui.factories.SearchPageObjectFactory;
+import lib.ui.factories.*;
 import org.junit.Test;
 
 public class AssertElementPresent extends CoreTestCase {

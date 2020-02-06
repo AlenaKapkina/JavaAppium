@@ -1,11 +1,8 @@
 package tests;
 
-import lib.CoreTestCase;
-import lib.Platform;
-import lib.ui.ArticlePageObject;
-import lib.ui.SearchPageObject;
-import lib.ui.factories.ArticlePageObjectFactory;
-import lib.ui.factories.SearchPageObjectFactory;
+import lib.*;
+import lib.ui.*;
+import lib.ui.factories.*;
 import org.junit.Test;
 
 public class CancelSearch extends CoreTestCase {

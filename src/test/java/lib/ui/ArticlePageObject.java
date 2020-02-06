@@ -1,8 +1,9 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import lib.Platform;
 
 abstract public class ArticlePageObject extends MainPageObject {
 
@@ -13,6 +14,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             SECOND_ARTICLE_IN_SEARCH_RESULTS,
             ARTICLE_NAME_TPL,
             BOOKMARK_BUTTON,
+            REMOVE_FROM_FAVOURITE_LIST,
             GOT_IT_BUTTON,
             CREATE_NEW_FAVOURITE_LIST,
             NAME_OF_THE_NEW_FAVOURITE_LIST,
@@ -66,9 +68,13 @@ abstract public class ArticlePageObject extends MainPageObject {
         return this.waitForElementPresent(TITLE, "Cannot find article title on the page", 15);
     }
 
-    public String getArticleTitleIOS() {
+    public String getArticleTitleIOSAndMW() {
         WebElement title_element = waitForTitleElement();
-        return title_element.getAttribute("name");
+        if (Platform.getInstance().isIOS()) {
+            return title_element.getAttribute("name");
+        } else {
+            return title_element.getText();
+        }
     }
 
     public void addArticleToMyNewList(String name_of_folder) {
@@ -119,15 +125,29 @@ abstract public class ArticlePageObject extends MainPageObject {
     }
 
     public void addArticleToMySaved() {
+        if (Platform.getInstance().isMW()) {
+            this.removeArticleFromSavedIfItAdded();
+        }
         this.waitForElementAndClick(BOOKMARK_BUTTON, "Cannot find and click bookmark button to add article to reading list", 5);
     }
 
+    public void removeArticleFromSavedIfItAdded() {
+        if (this.isElementPresent(REMOVE_FROM_FAVOURITE_LIST)) {
+            this.waitForElementAndClick(REMOVE_FROM_FAVOURITE_LIST, "Cannot find and click the button to remove an article from saved", 5);
+            this.waitForElementPresent(BOOKMARK_BUTTON, "Cannot find button to add an article to saved list after removing it from this list before");
+        }
+    }
+
     public void closeArticle() {
-        this.waitForElementAndClick(
-                CLOSE_ARTICLE_BUTTON,
-                "Cannot close the article. Cannot find the Back button",
-                5
-        );
+        if (Platform.getInstance().isIOS() || Platform.getInstance().isAndroid()) {
+            this.waitForElementAndClick(
+                    CLOSE_ARTICLE_BUTTON,
+                    "Cannot close the article. Cannot find the Back button",
+                    5
+            );
+        } else {
+            System.out.println("Method closeArticle() does nothing for platform " + Platform.getInstance().getPlatformVar());
+        }
     }
 
     public void closeTheAddedArticleAndTheNoThanksOverlay() {

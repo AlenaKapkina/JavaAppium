@@ -1,11 +1,8 @@
 import lib.CoreTestCase;
 import lib.ui.MainPageObject;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.*;
 
 public class ChangeScreenOrientationAfterTestToPortrait extends CoreTestCase {
 

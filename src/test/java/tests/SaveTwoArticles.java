@@ -8,6 +8,10 @@ import org.junit.Test;
 
 public class SaveTwoArticles extends CoreTestCase {
 
+    private static final String
+            login = "M05022020",
+            password = "20200205m";
+
     @Test
     public void testSaveTwoArticlesThenDeleteOneOfThemAndCheckThatTheSecondArticleStillPresent() {
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
@@ -32,9 +36,24 @@ public class SaveTwoArticles extends CoreTestCase {
 
         String name_of_folder = "Learning programming";
 
+        AuthorizationPageObject Auth = new AuthorizationPageObject(driver);
+
         if (Platform.getInstance().isAndroid()) {
             ArticlePageObject.addArticleToMyNewList(name_of_folder);
+        } else if (Platform.getInstance().isIOS()) {
+            ArticlePageObject.addArticleToMySaved();
         } else {
+            ArticlePageObject.addArticleToMySaved();
+            Auth.clickAuthButton();
+            Auth.enterLoginData(login, password);
+            Auth.submitForm();
+
+            ArticlePageObject.waitForTitleElement();
+
+            assertEquals("We are not on the same article page after login",
+                    java_article_name,
+                    ArticlePageObject.getArticleTitleIOSAndMW());
+
             ArticlePageObject.addArticleToMySaved();
         }
 
@@ -56,14 +75,20 @@ public class SaveTwoArticles extends CoreTestCase {
 
         String title_before_adding_to_list;
 
+
+        //check for mw
         if (Platform.getInstance().isAndroid()) {
             SearchPageObject.clickByArticleWithSubstringToOpenIt(topic_of_second_requested_article, second_search_request);
             ArticlePageObject.waitForArticlePresentWithTimeout(kotlin_article_name);
             title_before_adding_to_list = ArticlePageObject.getArticleTitleAndroid(kotlin_article_name);
-        } else {
+        } else if (Platform.getInstance().isIOS()) {
             title_before_adding_to_list = SearchPageObject.getArticleTitleFromSearchResultsIOS(kotlin_article_name);
             SearchPageObject.clickByArticleWithSubstringToOpenIt(topic_of_second_requested_article, second_search_request);
             ArticlePageObject.waitForArticlePresentWithTimeout(kotlin_article_name);
+        } else {
+            SearchPageObject.clickByArticleWithSubstringToOpenIt(topic_of_second_requested_article, second_search_request);
+            ArticlePageObject.waitForArticlePresentWithTimeout(kotlin_article_name);
+            title_before_adding_to_list = ArticlePageObject.getArticleTitleIOSAndMW();
         }
 
         if (Platform.getInstance().isAndroid()) {
@@ -74,28 +99,34 @@ public class SaveTwoArticles extends CoreTestCase {
 
         if (Platform.getInstance().isAndroid()) {
             ArticlePageObject.closeTheAddedArticleAndTheNoThanksOverlay();
-        } else {
+        } else if (Platform.getInstance().isIOS()) {
             ArticlePageObject.closeArticle();
             SearchPageObject.returnOnMainPageFromSearchResults();
         }
 
         NavigationUI NavigationUI = NavigationUIFactory.get(driver);
 
+        NavigationUI.openNavigation();
         NavigationUI.openMyLists();
 
         MyListsPageObject MyListsPageObject = MyListsPageObjectFactory.get(driver);
 
         String title_after_adding_to_list;
 
+        //check for mw
         if (Platform.getInstance().isAndroid()) {
             MyListsPageObject.openFolderByName(name_of_folder);
             MyListsPageObject.swipeArticleToDelete(java_article_name);
             MyListsPageObject.checkThatTheArticleWasNotDeletedByMistakeByOpeningIt(kotlin_article_name);
             title_after_adding_to_list = ArticlePageObject.getArticleTitleAndroid(kotlin_article_name);
-        } else {
+        } else if (Platform.getInstance().isIOS()) {
             title_after_adding_to_list = MyListsPageObject.getArticleTitleFromMyListsIOS(kotlin_article_name);
             MyListsPageObject.swipeArticleToDelete(java_article_name);
             MyListsPageObject.checkThatTheArticleWasNotDeletedByMistakeByOpeningIt(kotlin_article_name);
+        } else {
+            MyListsPageObject.swipeArticleToDelete(java_article_name);
+            MyListsPageObject.checkThatTheArticleWasNotDeletedByMistakeByOpeningIt(kotlin_article_name);
+            title_after_adding_to_list = ArticlePageObject.getArticleTitleIOSAndMW();
         }
 
         assertEquals(
