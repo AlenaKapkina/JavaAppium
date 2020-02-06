@@ -75,8 +75,6 @@ public class SaveTwoArticles extends CoreTestCase {
 
         String title_before_adding_to_list;
 
-
-        //check for mw
         if (Platform.getInstance().isAndroid()) {
             SearchPageObject.clickByArticleWithSubstringToOpenIt(topic_of_second_requested_article, second_search_request);
             ArticlePageObject.waitForArticlePresentWithTimeout(kotlin_article_name);
@@ -113,7 +111,6 @@ public class SaveTwoArticles extends CoreTestCase {
 
         String title_after_adding_to_list;
 
-        //check for mw
         if (Platform.getInstance().isAndroid()) {
             MyListsPageObject.openFolderByName(name_of_folder);
             MyListsPageObject.swipeArticleToDelete(java_article_name);

@@ -46,7 +46,7 @@ abstract public class SearchPageObject extends MainPageObject {
 
     public void clickByArticleWithSubstringToOpenIt(String substring, String search_request) {
         String search_result_xpath = getResultSearchElement(substring);
-        this.waitForElementAndClick(search_result_xpath, "Cannot find '" + substring + "' topic searching by " + search_request + "and click on the article", 15);
+        this.waitForElementAndClick(search_result_xpath, "Cannot find '" + substring + "' topic searching by " + search_request + " and click on the article", 15);
     }
 
     private WebElement waitForTitleElement(String substring) {

@@ -127,8 +127,12 @@ abstract public class ArticlePageObject extends MainPageObject {
     public void addArticleToMySaved() {
         if (Platform.getInstance().isMW()) {
             this.removeArticleFromSavedIfItAdded();
+            this.waitForElementAndClick(BOOKMARK_BUTTON, "Cannot find and click bookmark button to add article to reading list", 5);
+            this.waitForElementPresent(REMOVE_FROM_FAVOURITE_LIST, "Cannot find remove from my lists button. Maybe the article was not added to my list", 5);
+        } else {
+            this.waitForElementAndClick(BOOKMARK_BUTTON, "Cannot find and click bookmark button to add article to reading list", 5);
         }
-        this.waitForElementAndClick(BOOKMARK_BUTTON, "Cannot find and click bookmark button to add article to reading list", 5);
+
     }
 
     public void removeArticleFromSavedIfItAdded() {
