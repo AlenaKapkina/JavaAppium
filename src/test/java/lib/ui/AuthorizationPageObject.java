@@ -4,10 +4,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class AuthorizationPageObject extends MainPageObject {
     private static final String
-            LOGIN_BUTTON = "xpath://body/div/a[text()='Log in']",
+            LOGIN_BUTTON = "xpath://div[contains(@class, 'drawer')]//a[contains(@class, 'mw-ui-button')]",
             LOGIN_INPUT = "css:input[name='wpName']",
             PASSWORD_INPUT = "css:input[name='wpPassword']",
-            SUBMIT_BUTTON = "css:button#wploginattempt";
+            SUBMIT_BUTTON = "css:button#wpLoginAttempt";
 
     public AuthorizationPageObject(RemoteWebDriver driver) {
         super(driver);

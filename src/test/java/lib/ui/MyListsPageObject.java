@@ -48,7 +48,7 @@ abstract public class MyListsPageObject extends MainPageObject{
     public void waitForArticleToDisappearByTitle(String article_title) {
         this.waitForElementNotPresent(
                 getSavedArticleByTitleXpath(article_title),
-                "The article named" + article_title + " was not deleted",
+                "The article named " + article_title + " was not deleted",
                 5
         );
     }
