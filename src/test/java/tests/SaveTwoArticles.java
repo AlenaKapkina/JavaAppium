@@ -43,17 +43,8 @@ public class SaveTwoArticles extends CoreTestCase {
         } else if (Platform.getInstance().isIOS()) {
             ArticlePageObject.addArticleToMySaved();
         } else {
-
-            try {Thread.sleep(2000);}  catch (Exception e) {}
-
             ArticlePageObject.addArticleToMySaved();
-
-            try {Thread.sleep(2000);}  catch (Exception e) {}
-
             Auth.clickAuthButton();
-
-            try {Thread.sleep(2000);}  catch (Exception e) {}
-
             Auth.enterLoginData(login, password);
             Auth.submitForm();
 
